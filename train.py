@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import argparse
 import os
 import random
@@ -30,14 +31,14 @@ def DrawTrajectory(tra_pred, tra_true):
     true = tra_true[idx, :, :].cpu().detach().numpy()
 
     print('------------------------------')
-    print('真实的值为 密度 {0}, ' +
-          '比湿 {1}, ' +
-          '温度 {2}， ' +
-          '露点温度 {3}， ' +
-          '记录器温度 {4}， ' +
-          '潜在温度 {5}， ' +
-          '实际蒸气压 {6}， ' +
-          '最大蒸气压 {}'
+    print('real value  rho {0}, ' +
+          'sh {1}, ' +
+          'T {2}， ' +
+          'Tdew {3}， ' +
+          'Tlog {4}， ' +
+          'Tpot {5}， ' +
+          'VPact {6}， ' +
+          'VPmax {7}'
           .format(true[:, 0][true[:, 0].shape[0] - 1],
                   true[:, 1][true[:, 1].shape[0] - 1],
                   true[:, 2][true[:, 2].shape[0] - 1],
@@ -49,14 +50,14 @@ def DrawTrajectory(tra_pred, tra_true):
                   ))
     print('\n')
     # 按照data_read里顺序，下一时刻的位置预测为
-    print('预测的值为，密度 {0}, ' +
-          '比湿 {1}, ' +
-          '温度 {2}， ' +
-          '露点温度 {3}， ' +
-          '记录器温度 {4}， ' +
-          '潜在温度 {5}， ' +
-          '实际蒸气压 {6}， ' +
-          '最大蒸气压 {7}'
+    print('predict value，rho {0}, ' +
+          'sh {1}, ' +
+          'T {2}， ' +
+          'Tdew {3}， ' +
+          'Tlog {4}， ' +
+          'Tpot {5}， ' +
+          'VPact {6}， ' +
+          'VPmax {7}'
           .format(pred[:, 0][pred[:, 0].shape[0] - 1],
                   pred[:, 1][pred[:, 1].shape[0] - 1],
                   pred[:, 2][pred[:, 2].shape[0] - 1],
