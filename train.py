@@ -24,7 +24,7 @@ torch.set_default_tensor_type(torch.FloatTensor)
 
 # torch.nn.Transformer
 
-def DrawTrajectory(tra_pred, tra_true):
+def PredictTrajectory(tra_pred, tra_true):
 
     idx = random.randrange(0, tra_true.shape[0])
     pred = tra_pred[idx, :, :].cpu().detach().numpy()
@@ -112,7 +112,7 @@ def test(model, dataloader, device):
         tra_pred = model(input_data=data.to(device).to(torch.float32), device=device)
         loss = cal_performance(tra_pred, data[:, 1:, :].to(device).to(torch.float32))
     total_loss += loss.item()
-    DrawTrajectory(tra_pred, data[:, 0:10, :])
+    PredictTrajectory(tra_pred, data[:, 0:20, :])
     print("Test Finish, total_loss = {}".format(total_loss))
 
 
@@ -131,9 +131,9 @@ if __name__ == '__main__':
     parser.add_argument('-n_head', type=int, default=2)
     parser.add_argument('-n_layers', type=int, default=1)
     parser.add_argument('-dropout', type=float, default=0.1)
-    parser.add_argument('-do_train', type=bool, default=True)
+    parser.add_argument('-do_train', type=bool, default=False)
     parser.add_argument('-do_retrain', type=bool, default=False)
-    parser.add_argument('-do_eval', type=bool, default=False)
+    parser.add_argument('-do_eval', type=bool, default=True)
 
     opt = parser.parse_args()
     opt.d_word_vec = opt.d_model
@@ -187,7 +187,8 @@ if __name__ == '__main__':
     if opt.do_eval == True:
         data_test = WeatherTrajData(data_train_raw)
         test_loader = DataLoader(dataset=data_test, batch_size=opt.batch_size, shuffle=False)
-        model = torch.load('model.pt').to(device)
+        #model = torch.load('model.pt').to(device)
+        model = torch.load('model.pt', map_location=torch.device('cpu'))
 
         test(
             model=model,
