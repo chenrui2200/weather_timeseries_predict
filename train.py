@@ -84,6 +84,7 @@ def train(model, dataloader, optimizer, device, opt):
             loss.backward()
             optimizer.step_and_update_lr()
             total_loss += loss.item()
+
         log_writer.add_scalar("loss", total_loss, epoch_i)
         log_writer.add_scalar("lr", optimizer.get_lr(), epoch_i)
         if epoch_i % 100 == 0:
@@ -129,9 +130,9 @@ if __name__ == '__main__':
     parser.add_argument('-n_head', type=int, default=2)
     parser.add_argument('-n_layers', type=int, default=1)
     parser.add_argument('-dropout', type=float, default=0.1)
-    parser.add_argument('-do_train', type=bool, default=False)
+    parser.add_argument('-do_train', type=bool, default=True)
     parser.add_argument('-do_retrain', type=bool, default=False)
-    parser.add_argument('-do_eval', type=bool, default=True)
+    parser.add_argument('-do_eval', type=bool, default=False)
 
     opt = parser.parse_args()
     opt.d_word_vec = opt.d_model
@@ -164,7 +165,7 @@ if __name__ == '__main__':
         parameters = model_train.parameters()
         optimizer = ScheduledOptim(
             optim.Adam(parameters, betas=(0.9, 0.98), eps=1e-09),
-            opt.lr, opt.d_model, opt.n_warmup_steps, opt.use_mlp)
+            opt.lr, opt.d_model, opt.n_warmup_steps)
 
         if opt.do_retrain == True:
             checkpoint = torch.load("./checkpoint/ckpt.pth")

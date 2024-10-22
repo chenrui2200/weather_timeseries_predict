@@ -10,12 +10,12 @@ with open('./data/weather.pkl','rb') as f:
     step = 20
     i = 0
     while i < 26000:
-        data_train_raw.append(data[i:i + 11])
+        data_train_raw.append(data[i:i + step + 1])
         i += step
     # 验证集
     i = 26000
     while i < 52000:
-        data_test_raw.append(data[i:i + 11])
+        data_test_raw.append(data[i:i + step + 1])
         i += step
     pass
 

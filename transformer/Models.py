@@ -3,7 +3,7 @@
 import torch
 import torch.nn as nn
 import numpy as np
-from InputAndOutput import InputLayer, OutputLayer
+from input_and_output import InputLayer, OutputLayer
 from transformer.Layers import EncoderLayer, DecoderLayer
 from torch.nn import functional as F
 

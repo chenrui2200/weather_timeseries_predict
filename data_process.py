@@ -20,6 +20,6 @@ data=pd.concat([np.floor((df['rho (g/m**3)'])),
             np.floor((df['Tlog (degC)'])),
             np.floor((df['Tpot (K)'])),
             np.floor((df['VPact (mbar)'])),
-            np.floor((df['VPmax (mbar)']))])
+            np.floor((df['VPmax (mbar)']))], axis=1)
 
 data.to_pickle('./data/weather.pkl')
