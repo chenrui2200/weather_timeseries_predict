@@ -31,7 +31,7 @@ def PredictTrajectory(tra_pred, tra_true):
     true = tra_true[idx, :, :].cpu().detach().numpy()
 
     print('------------------------------')
-    print(f'last moment before predict value，\n ' +
+    print(f'real value，\n ' +
           f'rho {true[:, 0][-1]}, ' +
           f'sh {true[:, 1][-1]}, ' +
           f'T {true[:, 2][-1]}， ' +
@@ -96,7 +96,7 @@ def test(model, dataloader, device):
         tra_pred = model(input_data=data.to(device).to(torch.float32), device=device)
         loss = cal_performance(tra_pred, data[:, 1:, :].to(device).to(torch.float32))
     total_loss += loss.item()
-    PredictTrajectory(tra_pred, data[:, 0:20, :])
+    PredictTrajectory(tra_pred, data[:, 0:21, :])
     print("Test Finish, total_loss = {}".format(total_loss))
 
 
