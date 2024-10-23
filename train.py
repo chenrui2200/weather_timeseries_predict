@@ -31,42 +31,26 @@ def PredictTrajectory(tra_pred, tra_true):
     true = tra_true[idx, :, :].cpu().detach().numpy()
 
     print('------------------------------')
-    print('real value  rho {0}, ' +
-          'sh {1}, ' +
-          'T {2}， ' +
-          'Tdew {3}， ' +
-          'Tlog {4}， ' +
-          'Tpot {5}， ' +
-          'VPact {6}， ' +
-          'VPmax {7}'
-          .format(true[:, 0][true[:, 0].shape[0] - 1],
-                  true[:, 1][true[:, 1].shape[0] - 1],
-                  true[:, 2][true[:, 2].shape[0] - 1],
-                  true[:, 3][true[:, 3].shape[0] - 1],
-                  true[:, 4][true[:, 4].shape[0] - 1],
-                  true[:, 5][true[:, 5].shape[0] - 1],
-                  true[:, 6][true[:, 6].shape[0] - 1],
-                  true[:, 7][true[:, 7].shape[0] - 1],
-                  ))
-    print('\n')
+    print(f'last moment before predict value，\n ' +
+          f'rho {true[:, 0][-1]}, ' +
+          f'sh {true[:, 1][-1]}, ' +
+          f'T {true[:, 2][-1]}， ' +
+          f'Tdew {true[:, 3][-1]}， ' +
+          f'Tlog {true[:, 4][-1]}， ' +
+          f'Tpot {true[:, 5][-1]}， ' +
+          f'VPact {true[:, 6][-1]}，' +
+          f'VPmax {true[:, 7][-1]}')
     # 按照data_read里顺序，下一时刻的位置预测为
-    print('predict value，rho {0}, ' +
-          'sh {1}, ' +
-          'T {2}， ' +
-          'Tdew {3}， ' +
-          'Tlog {4}， ' +
-          'Tpot {5}， ' +
-          'VPact {6}， ' +
-          'VPmax {7}'
-          .format(pred[:, 0][pred[:, 0].shape[0] - 1],
-                  pred[:, 1][pred[:, 1].shape[0] - 1],
-                  pred[:, 2][pred[:, 2].shape[0] - 1],
-                  pred[:, 3][pred[:, 3].shape[0] - 1],
-                  pred[:, 4][pred[:, 4].shape[0] - 1],
-                  pred[:, 5][pred[:, 5].shape[0] - 1],
-                  pred[:, 6][pred[:, 6].shape[0] - 1],
-                  pred[:, 7][pred[:, 7].shape[0] - 1],
-                  ))
+    print(f'predict value，\n'
+          f'rho {pred[:, 0][-1]}, ' +
+          f'sh {pred[:, 1][-1]}, ' +
+          f'T {pred[:, 2][-1]}， ' +
+          f'Tdew {pred[:, 3][-1]}， ' +
+          f'Tlog {pred[:, 4][-1]}， ' +
+          f'Tpot {pred[:, 5][-1]}， ' +
+          f'VPact {pred[:, 6][-1]}，' +
+          f'VPmax {pred[:, 7][-1]}')
+
 
 
 def cal_performance(tra_pred, tra_true):
