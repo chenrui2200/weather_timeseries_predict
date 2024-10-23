@@ -171,8 +171,8 @@ if __name__ == '__main__':
     if opt.do_eval == True:
         data_test = WeatherTrajData(data_train_raw)
         test_loader = DataLoader(dataset=data_test, batch_size=opt.batch_size, shuffle=False)
-        #model = torch.load('model.pt').to(device)
-        model = torch.load('model.pt', map_location=torch.device('cpu'))
+        model = torch.load('model.pt').to(device)
+        #model = torch.load('model.pt', map_location=torch.device('cpu'))
 
         test(
             model=model,
