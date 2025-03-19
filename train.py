@@ -115,9 +115,10 @@ if __name__ == '__main__':
     parser.add_argument('-n_head', type=int, default=2)
     parser.add_argument('-n_layers', type=int, default=1)
     parser.add_argument('-dropout', type=float, default=0.1)
-    parser.add_argument('-do_train', type=bool, default=False)
+    parser.add_argument('-do_train', type=bool, default=True)
     parser.add_argument('-do_retrain', type=bool, default=False)
     parser.add_argument('-do_eval', type=bool, default=True)
+    parser.add_argument('-dynamic_tanh', type=bool, default=True)
 
     opt = parser.parse_args()
     opt.d_word_vec = opt.d_model
@@ -141,6 +142,7 @@ if __name__ == '__main__':
         n_layers=opt.n_layers,
         n_head=opt.n_head,
         dropout=opt.dropout,
+        dynamic_tanh=opt.dynamic_tanh
     ).to(device)
 
     if opt.do_train == True:
