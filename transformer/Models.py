@@ -9,6 +9,8 @@ from torch.nn import functional as F
 
 __author__ = "Chen Rui, Oxalate-c"
 
+from transformer.dynamic_tanh import convert_ln_to_dyt
+
 
 def get_subsequent_mask(seq):
     ''' For masking out the subsequent info. '''
@@ -173,9 +175,11 @@ class Transformer(nn.Module):
             d_k=64,
             d_v=64,
             dropout=0.1,
-            n_position=200):
+            n_position=200,
+            dynamic_tanh=False):
 
         super().__init__()
+        self.dynamic_tanh=dynamic_tanh
         self.d_model = d_model
         self.input_layer = InputLayer()
         self.encoder = Encoder(
@@ -184,11 +188,17 @@ class Transformer(nn.Module):
             n_layers=n_layers, n_head=n_head, d_k=d_k, d_v=d_v,
             dropout=dropout)
 
+        if self.dynamic_tanh:
+            self.encoder = convert_ln_to_dyt(self.encoder)
+
         self.decoder = Decoder(
             n_trg_vocab=n_trg_vocab, n_position=n_position,
             d_word_vec=d_word_vec, d_model=d_model, d_inner=d_inner,
             n_layers=n_layers, pad_idx=1, n_head=n_head, d_k=d_k, d_v=d_v,
             dropout=dropout)
+
+        if self.dynamic_tanh:
+            self.decoder = convert_ln_to_dyt(self.decoder)
 
         self.output_layer = OutputLayer()
 
